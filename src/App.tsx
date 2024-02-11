@@ -7,12 +7,16 @@ const D_FONT_SIZE = 24;
 const MAX_FONT_SIZE = 100;
 
 const labels = [
-  'Si si ista?',
-  'Premysli si to!',
-  'To naozaj? :(',
-  'CICKA!',
-  'Ale no tak!',
-  'Už ma neklikaj!'
+  'Si si istá prdko?',
+  'Premysli si to las!',
+  'Ešte máš šancu si to rozmyslieť!',
+  'Bubik to naozaj? :(',
+  'Už to prestáva byť vtipné!',
+  'PRDKO! Klikni už na to áno!',
+  'No tak, už to klikni!',
+  'Klikni na to áno!',
+  'Už to klikni!',
+  'Už dosť!',
 ];
 
 function App() {
@@ -43,19 +47,27 @@ function FirstView({ nextPage }: { nextPage: () => void }) {
         width: `${size * 1.5}px`,
         fontSize: `${font}px`,
       }}>Áno</button>
-      <button className={`rounded z-10 absolute${!noLoc ? 'left-1/2 top-[calc(50vh+110px)] sm:left-[70%] sm:top-1/2' : 'width-[' + noSize * MULTIPLIER + 'px] left-[' + noLoc[0] + '%' + '] top-[' + noLoc[1] + '%]'} -translate-x-1/2 -translate-y-1/2 bg-[#f5797d] border-[#d65257] border-[1px] shadow-lg hover:bg-[#ee7074] hover:-translate-y-[55%]`} onClick={() => {
-        setClicks(clicks + 1);
-        setSize(size * MULTIPLIER);
-        if (size > gMult(D_BUTTON_SIZE, MULTIPLIER, 2)) {
+      <button
+        className={`rounded z-10 absolute bg-[#f5797d] border-[#d65257] border-[1px] shadow-lg hover:bg-[#ee7074] hover:-translate-y-[55%]`}
+        onClick={() => {
+          setClicks(clicks + 1);
+          setSize(size * MULTIPLIER);
           setNoSize(noSize * 0.9);
-        }
-        if (size > gMult(D_BUTTON_SIZE, MULTIPLIER, 3)) {
-          setNoLoc([Math.random() * 100, Math.random() * 100]);
-        }
-      }} style={{
-        height: `${noSize}px`,
-        fontSize: `${D_FONT_SIZE * (noSize / D_BUTTON_SIZE)}px`,
-      }}>{clicks > 0 ? clicks > labels.length ? labels[Math.floor(Math.random() * labels.length)] : labels[clicks - 1] : 'Nie'}</button>
+          if (size > gMult(D_BUTTON_SIZE, MULTIPLIER, 3)) {
+            setNoLoc([10 + Math.random() * 80, 10 + Math.random() * 80]);
+          }
+        }}
+        style={{
+          height: `${noSize}px`,
+          width: `${noSize * MULTIPLIER}px`,
+          fontSize: `${D_FONT_SIZE * (noSize / D_BUTTON_SIZE)}px`,
+          left: noLoc ? `${noLoc[0]}%` : '70%',
+          top: noLoc ? `${noLoc[1]}%` : '50%',
+          transform: noLoc ? 'none' : 'translate(-50%, -50%)',
+        }}
+      >
+        {clicks > 0 ? clicks > labels.length ? labels[Math.floor(Math.random() * labels.length)] : labels[clicks - 1] : 'Nie'}
+      </button>
       <img src="/heart.png" className="absolute right-0 bottom-0 translate-x-1/3 translate-y-1/4" />
     </>
   );
